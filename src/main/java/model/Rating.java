@@ -1,13 +1,13 @@
 package model;
 
-public class RatingModel {
+public class Rating {
     private String id;
     private String mediaId;
     private String username;
     private int score;
     private String comment;
 
-    public RatingModel(String id, String mediaId, String username, int score) {
+    public Rating(String id, String mediaId, String username, int score) {
         this.id = id;
         this.mediaId = mediaId;
         this.username = username;

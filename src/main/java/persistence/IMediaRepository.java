@@ -1,12 +1,12 @@
 package persistence;
 
-import model.MediaModel;
+import model.MediaEntry;
 import java.util.List;
 
 public interface IMediaRepository {
-    boolean create(MediaModel media);
-    MediaModel findById(String id);
-    boolean update(MediaModel media);
+    boolean create(MediaEntry media);
+    MediaEntry findById(String id);
+    boolean update(MediaEntry media);
     boolean deleteById(String id);
-    List<MediaModel> findAll();
+    List<MediaEntry> findAll();
 }

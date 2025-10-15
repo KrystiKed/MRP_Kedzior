@@ -1,14 +1,14 @@
 package persistence;
 
-import model.UserModel;
+import model.User;
 import java.util.List;
 
 public interface IUserRepository {
-    boolean login(UserModel user);
+    boolean login(User user);
 
-    boolean create(UserModel user);
-    UserModel findByUsername(String username);
-    boolean update(UserModel user);
+    boolean create(User user);
+    User findByUsername(String username);
+    boolean update(User user);
     boolean deleteByUsername(String username);
-    List<UserModel> findAll();
+    List<User> findAll();
 }

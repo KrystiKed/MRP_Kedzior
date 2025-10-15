@@ -1,6 +1,6 @@
 package persistence;
 
-import model.RatingModel;
+import model.Rating;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,12 +8,12 @@ public class RatingSqlRepository implements IRatingRepository {
     private static final RatingSqlRepository INSTANCE = new RatingSqlRepository();
     public static RatingSqlRepository getInstance() { return INSTANCE; }
 
-    private final List<RatingModel> store = new ArrayList<>();
+    private final List<Rating> store = new ArrayList<>();
 
     private RatingSqlRepository() {}
 
     @Override
-    public boolean create(RatingModel rating) {
+    public boolean create(Rating rating) {
         if (rating == null || rating.getId() == null) return false;
         if (findById(rating.getId()) != null) return false;
 
@@ -21,28 +21,28 @@ public class RatingSqlRepository implements IRatingRepository {
     }
 
     @Override
-    public RatingModel findById(String id) {
+    public Rating findById(String id) {
         if (id == null) return null;
-        for (RatingModel r : store) if (id.equals(r.getId())) return r;
+        for (Rating r : store) if (id.equals(r.getId())) return r;
         return null;
     }
 
     @Override
-    public List<RatingModel> findByMediaId(String mediaId) {
-        List<RatingModel> res = new ArrayList<>();
-        for (RatingModel r : store) if (mediaId != null && mediaId.equals(r.getMediaId())) res.add(r);
+    public List<Rating> findByMediaId(String mediaId) {
+        List<Rating> res = new ArrayList<>();
+        for (Rating r : store) if (mediaId != null && mediaId.equals(r.getMediaId())) res.add(r);
         return res;
     }
 
     @Override
-    public List<RatingModel> findByUsername(String username) {
-        List<RatingModel> res = new ArrayList<>();
-        for (RatingModel r : store) if (username != null && username.equals(r.getUsername())) res.add(r);
+    public List<Rating> findByUsername(String username) {
+        List<Rating> res = new ArrayList<>();
+        for (Rating r : store) if (username != null && username.equals(r.getUsername())) res.add(r);
         return res;
     }
 
     @Override
-    public boolean update(RatingModel rating) {
+    public boolean update(Rating rating) {
 
         return false;
     }
@@ -61,7 +61,7 @@ public class RatingSqlRepository implements IRatingRepository {
     }
 
     @Override
-    public List<RatingModel> findAll() {
+    public List<Rating> findAll() {
         return new ArrayList<>(store);
     }
 }

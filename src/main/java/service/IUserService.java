@@ -1,14 +1,14 @@
 package service;
 
-import model.UserModel;
+import model.User;
 import java.util.List;
 
 public interface IUserService {
-    boolean login(UserModel user);
+    boolean login(User user);
 
-    boolean register(UserModel user);
-    boolean logout(UserModel user);
+    boolean register(User user);
+    boolean logout(User user);
     boolean changePassword(String username, String oldPw, String newPw);
-    UserModel getByUsername(String username);
-    List<UserModel> listUsers();
+    User getByUsername(String username);
+    List<User> listUsers();
 }

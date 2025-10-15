@@ -1,12 +1,12 @@
 package service;
 
-import model.MediaModel;
+import model.MediaEntry;
 import java.util.List;
 
 public interface IMediaService {
-    boolean add(MediaModel media);
-    MediaModel get(String id);
-    boolean edit(MediaModel media);
+    boolean add(MediaEntry media);
+    MediaEntry get(String id);
+    boolean edit(MediaEntry media);
     boolean remove(String id);
-    List<MediaModel> list();
+    List<MediaEntry> list();
 }

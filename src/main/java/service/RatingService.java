@@ -1,6 +1,6 @@
 package service;
 
-import model.RatingModel;
+import model.Rating;
 import persistence.IRatingRepository;
 
 import java.util.List;
@@ -11,22 +11,22 @@ public class RatingService implements IRatingService {
     public RatingService(IRatingRepository repo) { this.repo = repo; }
 
     @Override
-    public boolean add(RatingModel rating) {
+    public boolean add(Rating rating) {
 
         return repo.create(rating);
     }
 
     @Override
-    public RatingModel get(String id) { return repo.findById(id); }
+    public Rating get(String id) { return repo.findById(id); }
 
     @Override
-    public List<RatingModel> listByMedia(String mediaId) { return repo.findByMediaId(mediaId); }
+    public List<Rating> listByMedia(String mediaId) { return repo.findByMediaId(mediaId); }
 
     @Override
-    public List<RatingModel> listByUser(String username) { return repo.findByUsername(username); }
+    public List<Rating> listByUser(String username) { return repo.findByUsername(username); }
 
     @Override
-    public boolean edit(RatingModel rating) { return repo.update(rating); }
+    public boolean edit(Rating rating) { return repo.update(rating); }
 
     @Override
     public boolean remove(String id) { return repo.deleteById(id); }
@@ -37,7 +37,7 @@ public class RatingService implements IRatingService {
     }
 
     @Override
-    public List<RatingModel> listAll() { return repo.findAll(); }
+    public List<Rating> listAll() { return repo.findAll(); }
 
     @Override
     public Double averageForMedia(String mediaId) {

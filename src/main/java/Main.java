@@ -1,4 +1,4 @@
-import handler.*;
+/* import handler.*;
 import model.*;
 import persistence.*;
 import service.*;
@@ -20,44 +20,44 @@ public class Main {
         MediaHandler mediaHandler = new MediaHandler(mediaService);
         RatingHandler ratingHandler = new RatingHandler(ratingService);
 
-        UserModel alice = new UserModel("alice", "123");
-        UserModel bob   = new UserModel("bob", "456");
+        User alice = new User("alice", "123");
+        User bob   = new User("bob", "456");
 
         userHandler.register(alice);
         userHandler.register(bob);
 
-        boolean loginOk = userHandler.login(new UserModel("alice", "123"));
+        boolean loginOk = userHandler.login(new User("alice", "123"));
         System.out.println("Login Alice: " + loginOk);
 
-        MediaModel m1 = new MediaModel("m1", "Inception");
+        MediaEntry m1 = new MediaEntry("m1", "Inception");
         m1.setType("MOVIE");
         m1.setReleaseYear(2010);
         m1.setOwnerUsername("alice");
         mediaHandler.add(m1);
 
-        MediaModel m2 = new MediaModel("m2", "Breaking Bad");
+        MediaEntry m2 = new MediaEntry("m2", "Breaking Bad");
         m2.setType("SERIES");
         m2.setReleaseYear(2008);
         m2.setOwnerUsername("bob");
         mediaHandler.add(m2);
 
-        List<MediaModel> mediaList = mediaHandler.list();
+        List<MediaEntry> mediaList = mediaHandler.list();
         System.out.println("Alle Media-Einträge:");
-        for (MediaModel media : mediaList) {
+        for (MediaEntry media : mediaList) {
             System.out.println(" - " + media.getTitle() + " (" + media.getType() + ")");
         }
 
-        RatingModel r1 = new RatingModel("r1", "m1", "alice", 5);
+        Rating r1 = new Rating("r1", "m1", "alice", 5);
         r1.setComment("Großartiger Film!");
         ratingHandler.add(r1);
 
-        RatingModel r2 = new RatingModel("r2", "m1", "bob", 4);
+        Rating r2 = new Rating("r2", "m1", "bob", 4);
         r2.setComment("Sehr gut, aber etwas verwirrend");
         ratingHandler.add(r2);
 
-        List<RatingModel> ratings = ratingHandler.byMedia("m1");
+        List<Rating> ratings = ratingHandler.byMedia("m1");
         System.out.println("Ratings für Inception:");
-        for (RatingModel r : ratings) {
+        for (Rating r : ratings) {
             System.out.println(" - " + r.getUsername() + " gibt " + r.getScore() + " Sterne: " + r.getComment());
         }
 

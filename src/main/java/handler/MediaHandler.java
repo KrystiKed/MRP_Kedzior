@@ -1,6 +1,6 @@
 package handler;
 
-import model.MediaModel;
+import model.MediaEntry;
 import service.IMediaService;
 import java.util.List;
 
@@ -9,13 +9,13 @@ public class MediaHandler {
 
     public MediaHandler(IMediaService mediaService) { this.mediaService = mediaService; }
 
-    public boolean add(MediaModel media) {
+    public boolean add(MediaEntry media) {
         if (media == null || media.getId() == null) return false;
         return mediaService.add(media);
     }
 
-    public MediaModel get(String id) { return mediaService.get(id); }
-    public boolean edit(MediaModel media) { return mediaService.edit(media); }
+    public MediaEntry get(String id) { return mediaService.get(id); }
+    public boolean edit(MediaEntry media) { return mediaService.edit(media); }
     public boolean remove(String id) { return mediaService.remove(id); }
-    public List<MediaModel> list() { return mediaService.list(); }
+    public List<MediaEntry> list() { return mediaService.list(); }
 }

@@ -1,6 +1,6 @@
 package persistence;
 
-import model.MediaModel;
+import model.MediaEntry;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,26 +8,26 @@ public class MediaSqlRepository implements IMediaRepository {
     private static final MediaSqlRepository INSTANCE = new MediaSqlRepository();
     public static MediaSqlRepository getInstance() { return INSTANCE; }
 
-    private final List<MediaModel> store = new ArrayList<>();
+    private final List<MediaEntry> store = new ArrayList<>();
 
     private MediaSqlRepository() {}
 
     @Override
-    public boolean create(MediaModel media) {
+    public boolean create(MediaEntry media) {
         if (media == null || media.getId() == null) return false;
         if (findById(media.getId()) != null) return false;
         return store.add(media);
     }
 
     @Override
-    public MediaModel findById(String id) {
+    public MediaEntry findById(String id) {
         if (id == null) return null;
-        for (MediaModel m : store) if (id.equals(m.getId())) return m;
+        for (MediaEntry m : store) if (id.equals(m.getId())) return m;
         return null;
     }
 
     @Override
-    public boolean update(MediaModel media) {
+    public boolean update(MediaEntry media) {
 
         return false;
     }
@@ -38,7 +38,7 @@ public class MediaSqlRepository implements IMediaRepository {
     }
 
     @Override
-    public List<MediaModel> findAll() {
+    public List<MediaEntry> findAll() {
         return new ArrayList<>(store);
     }
 }

@@ -2,7 +2,7 @@ package model;
 
 import java.util.List;
 
-public class MediaModel {
+public class MediaEntry {
     private String id;
     private String title;
     private String description;
@@ -11,7 +11,7 @@ public class MediaModel {
     private List<String> genres;
     private String ownerUsername;
 
-    public MediaModel(String id, String title) {
+    public MediaEntry(String id, String title) {
         this.id = id;
         this.title = title;
     }

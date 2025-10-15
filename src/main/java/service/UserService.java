@@ -1,6 +1,6 @@
 package service;
 
-import model.UserModel;
+import model.User;
 import persistence.IUserRepository;
 import java.util.List;
 
@@ -21,18 +21,18 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean login(UserModel user) {
+    public boolean login(User user) {
         return userRepository.login(user);
     }
 
     @Override
-    public boolean register(UserModel user) {
+    public boolean register(User user) {
 
         return userRepository.create(user);
     }
 
     @Override
-    public boolean logout(UserModel user) {
+    public boolean logout(User user) {
 
         return true;
     }
@@ -44,12 +44,12 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserModel getByUsername(String username) {
+    public User getByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
     @Override
-    public List<UserModel> listUsers() {
+    public List<User> listUsers() {
         return userRepository.findAll();
     }
 }

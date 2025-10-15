@@ -1,6 +1,6 @@
 package service;
 
-import model.MediaModel;
+import model.MediaEntry;
 import persistence.IMediaRepository;
 import java.util.List;
 
@@ -10,18 +10,18 @@ public class MediaService implements IMediaService {
     public MediaService(IMediaRepository repo) { this.repo = repo; }
 
     @Override
-    public boolean add(MediaModel media) {
+    public boolean add(MediaEntry media) {
 
         return repo.create(media);
     }
 
     @Override
-    public MediaModel get(String id) {
+    public MediaEntry get(String id) {
         return repo.findById(id);
     }
 
     @Override
-    public boolean edit(MediaModel media) {
+    public boolean edit(MediaEntry media) {
 
         return repo.update(media);
     }
@@ -32,7 +32,7 @@ public class MediaService implements IMediaService {
     }
 
     @Override
-    public List<MediaModel> list() {
+    public List<MediaEntry> list() {
         return repo.findAll();
     }
 }
