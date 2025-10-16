@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.util.Map;
 
 
 public class Server {
@@ -22,7 +23,7 @@ public class Server {
                 Response res = new Response(exchange);
                 router.handle(req, res);
             } catch (Exception e) {
-                new Response(exchange).json(500, Json.obj("error", "Internal server error"));
+                new Response(exchange).json(500, Map.of("error", "Internal server error"));
             } finally {
                 exchange.close();
             }
