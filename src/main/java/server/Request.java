@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.LinkedHashMap;
+import java.net.URLDecoder;
 
 public final class Request {
     private final HttpExchange ex;
@@ -17,8 +19,8 @@ public final class Request {
         this.ex = ex;
         this.method = ex.getRequestMethod();
         URI uri = ex.getRequestURI();
-        this.path = uri.getPath();
-        this.query = Urls.parseQuery(uri.getRawQuery());
+        this.path = (uri.getPath() == null || uri.getPath().isEmpty()) ? "/" : uri.getPath();
+        this.query = parseQuery(uri.getRawQuery());
     }
     public static Request from(HttpExchange ex) { return new Request(ex); }
 
@@ -34,5 +36,28 @@ public final class Request {
     public String header(String name) {
         var values = ex.getRequestHeaders().get(name);
         return (values == null || values.isEmpty()) ? null : values.get(0);
+    }
+
+    private static Map<String,String> parseQuery(String raw) {
+        Map<String,String> out = new LinkedHashMap<>();
+        if (raw == null || raw.isEmpty()) return out;
+
+        String[] pairs = raw.split("&");
+        for (String pair : pairs) {
+            int idx = pair.indexOf('=');
+            String k = decode(idx >= 0 ? pair.substring(0, idx) : pair);
+            String v = decode(idx >= 0 ? pair.substring(idx + 1) : "");
+            out.putIfAbsent(k, v);
+        }
+        return out;
+    }
+
+    private static String decode(String s) {
+        try {
+            return URLDecoder.decode(s, StandardCharsets.UTF_8);
+        }
+        catch (Exception e) {
+            return s;
+        }
     }
 }

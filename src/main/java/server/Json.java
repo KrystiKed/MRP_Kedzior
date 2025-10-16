@@ -3,14 +3,12 @@ package server;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.io.File;
+import java.util.List;
 
 public final class Json {
     private static final ObjectMapper MAPPER = new ObjectMapper()
-            .disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-
-    private Json() {}
+            .enable(SerializationFeature.INDENT_OUTPUT);
 
     public static byte[] writeBytes(Object payload) throws Exception {
         return MAPPER.writeValueAsBytes(payload);
@@ -20,11 +18,14 @@ public final class Json {
         return MAPPER.readValue(body, type);
     }
 
-    public static Map<String, Object> obj(Object... kv) {
-        Map<String, Object> m = new LinkedHashMap<>();
-        for (int i = 0; i + 1 < kv.length; i += 2) {
-            m.put(String.valueOf(kv[i]), kv[i + 1]);
-        }
-        return m;
+    public static <T> List<T> readListFromFile(String path, Class<T> elemType) throws Exception {
+        File f = new File(path);
+        if (!f.exists()) return List.of();
+        return MAPPER.readValue(
+                f, MAPPER.getTypeFactory().constructCollectionType(List.class, elemType));
+    }
+
+    public static void writeListToFile(List<?> list, String path) throws Exception {
+        MAPPER.writeValue(new File(path), list);
     }
 }
