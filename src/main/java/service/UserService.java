@@ -1,12 +1,19 @@
 package service;
 
 import model.User;
-import persistence.IUserRepository;
-import java.util.List;
+import server.DataStore;
+import server.IUserStorage;
 
 public class UserService implements IUserService {
 
-    private static UserService instance = null;
+    private final IUserStorage storage;
+
+    public UserService(IUserStorage storage) {
+
+        this.storage = storage;
+    }
+
+    /* private static UserService instance = null;
     private final IUserRepository userRepository;
 
     private UserService(IUserRepository userRepository) {
@@ -19,18 +26,31 @@ public class UserService implements IUserService {
         }
         return instance;
     }
-
+*/
     @Override
     public boolean login(User user) {
-        return userRepository.login(user);
+        return false;
     }
 
     @Override
     public boolean register(User user) {
 
-        return userRepository.create(user);
+        if (user == null || isBlank(user.getUsername()) || isBlank(user.getPassword())) return false;
+        String uname = user.getUsername().trim();
+        if (DataStore.usersByName.containsKey(uname)) return false;
+        DataStore.usersByName.put(uname, new User(uname, user.getPassword()));
+
+        try {
+            storage.saveAll(DataStore.usersByName);
+        } catch (Exception ignored) {
+        }
+
+        return true;
     }
 
+    private static boolean isBlank(String s) {return s == null || s.isEmpty();}
+
+    /*
     @Override
     public boolean logout(User user) {
 
@@ -52,4 +72,5 @@ public class UserService implements IUserService {
     public List<User> listUsers() {
         return userRepository.findAll();
     }
+     */
 }

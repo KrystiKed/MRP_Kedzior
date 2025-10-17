@@ -16,11 +16,20 @@ public class UserHandler {
         return userService.login(user);
     }
 
-    public boolean register(User user) { return userService.register(user); }
+    public boolean register(User user) {
+        if (user == null) return false;
+        String u = user.getUsername();
+        String p = user.getPassword();
+        if (u == null || u.isBlank() || p == null || p.isBlank()) return false;
+        return userService.register(new User(u.trim(), p));
+    }
+
+    /*
     public boolean logout(User user) { return userService.logout(user); }
     public boolean changePassword(String username, String oldPw, String newPw) {
         return userService.changePassword(username, oldPw, newPw);
     }
     public User getUser(String username) { return userService.getByUsername(username); }
     public List<User> listUsers() { return userService.listUsers(); }
+     */
 }
