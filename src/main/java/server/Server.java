@@ -5,7 +5,7 @@ import controller.UserController;
 import handler.UserHandler;
 import service.IUserService;
 import service.UserService;
-
+import service.AuthService;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -31,7 +31,8 @@ public class Server {
 
         IUserService userService = new UserService(storage);
         UserHandler userHandler = new UserHandler(userService);
-        Router router = new Router(new UserController(userHandler));
+        AuthService authService = new AuthService();
+        Router router = new Router(new UserController(userHandler,  authService));
 
 
         httpServer.createContext("/", exchange -> {
