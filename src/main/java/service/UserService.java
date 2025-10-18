@@ -29,7 +29,15 @@ public class UserService implements IUserService {
 */
     @Override
     public boolean login(User user) {
-        return false;
+
+        if (user == null || user.getUsername() == null || user.getPassword() == null) return false;
+        String uname = user.getUsername().trim();
+        User existing = DataStore.usersByName.get(uname);
+        if(existing == null) {
+            return false;
+        }
+        return existing.getPassword() != null && existing.getPassword().equals(user.getPassword());
+
     }
 
     @Override
