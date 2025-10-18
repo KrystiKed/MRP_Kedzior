@@ -17,6 +17,11 @@ public class Router {
             userController.register(req, res);
             return;
         }
+
+        if ("POST".equals(method) && "/api/users/login".equals(path)) {
+            userController.login(req, res);
+            return;
+        }
         res.json(404, Map.of("error", "Route not found!"));
     }
 }
