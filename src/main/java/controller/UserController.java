@@ -5,13 +5,17 @@ import model.User;
 import server.Json;
 import server.Request;
 import server.Response;
+import service.AuthService;
 
 import java.util.Map;
 
 public class UserController {
     private final UserHandler userHandler;
-    public UserController(UserHandler userHandler) {
+    private final AuthService authService;
+
+    public UserController(UserHandler userHandler,  AuthService authService) {
         this.userHandler = userHandler;
+        this.authService = authService;
     }
 
     public void register(Request req, Response res) {
@@ -25,6 +29,23 @@ public class UserController {
                 res.json(409, Map.of("error","username already exists")); return;
             }
             res.json(201, Map.of("message","registered"));
+        } catch (Exception e) {
+            res.json(400, Map.of("error","invalid json"));
+        }
+    }
+
+    public void login(Request req, Response res) {
+        try {
+            Body b = Json.read(req.bodyString(), Body.class);
+            if (b == null || isBlank(b.username) || isBlank(b.password)) {
+                res.json(400, Map.of("error","invalid input")); return;
+            }
+            boolean ok = userHandler.login(new User(b.username, b.password));
+            if (!ok) {
+                res.json(401, Map.of("error","username or password is incorrect")); return;
+            }
+            String token = authService.generateToken(b.username);
+            res.json(200, Map.of("token", token));
         } catch (Exception e) {
             res.json(400, Map.of("error","invalid json"));
         }
